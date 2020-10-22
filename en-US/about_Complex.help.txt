@@ -1,0 +1,17 @@
+PSTOPIC
+    about_Complex
+
+SHORT DESCRIPTION
+    PSi.Complex
+
+LONG DESCRIPTION
+    PSi.Complex allows you to work with the Numerics.Complex structs in PowerShell.
+
+    You can find documentation here:
+    https://docs.microsoft.com/en-us/dotnet/api/system.numerics.complex 
+
+DETAILED DESCRIPTION
+    This is a rudimentary module that allows easy creation and manipulation of Systems.Numerics.Complex structs. 
+    Structs returned from New-ComplexNumbers can the be displayed in human readable forms with Show-ComplexNumbers. 
+    Complex math can be invoked upon the objects with Invoke-ComplexMath. 
+    For further assistance, each function has its own documentation.
