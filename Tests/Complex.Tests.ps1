@@ -2,21 +2,15 @@
 
 $ModuleRoot = Resolve-Path "$PSScriptRoot\.." 
 $ModuleName = Split-Path $ModuleRoot -Leaf 
+$ModulePath = Join-Path $ModuleRoot ($ModuleName + '.psd1')
+$IsLoaded = $null -ne (Get-Module $ModuleName)
 
-
-function Test-Module { 
-    $null -ne (Get-Module $ModuleName) 
-} 
-
-
-# If the module is loaded, remove it so the current source can be reloaded. 
-$IsLoaded = Test-Module 
-if ($IsLoaded) { 
-    Remove-Module $ModuleName 
-} 
-
+if (-not $IsLoaded) {
+    Import-Module $ModulePath -Force 
+}
 
 #endregion
+
 #region Complex Tests ---------------------------------------------------------------------------------------------
 
 Describe 'Invoke-ComplexMath' {

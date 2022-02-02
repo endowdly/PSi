@@ -161,17 +161,6 @@ function Invoke-ComplexMath {
         # A number that is either a double or complex number.
         [Parameter(ParameterSetName = 'Pow', Position = 1, ValueFromPipelineByPropertyName)]
         [Parameter(ParameterSetName = 'Log', Position = 1, ValueFromPipelineByPropertyName)]
-        # [ValidateScript({ 
-        #     if ($_ -isnot [Numerics.Complex]) {
-        #         try { 
-        #             $_ -as [double] 
-        #         } 
-        #         catch { 
-        #             throw "$_ is not a valid argument type; " + 
-        #                   'provide a number,  string numeric,  or a complex object'
-        #         }
-        #     }
-        # })]
         $Argument = 1 # Can be multiple types
     )
     
@@ -335,7 +324,8 @@ function New-ComplexNumber {
 }
 
 
-function Show-ComplexNumber { 
+# Todo: Rename to Format
+function Write-ComplexNumber { 
     <#
     .Synopsis
       Display a Complex Number Object 
@@ -348,18 +338,18 @@ function Show-ComplexNumber {
       System.String 
     .Example
       PS> $m = New-ComplexNumber -Real 2 -Imaginary -3
-      PS> Show-ComplexNumber $a
+      PS> Write-ComplexNumber $a
       2-3i        
     .Example
       PS> $a = New-ComplexNumber -Real 2 -Imaginary -3
-      PS> Show-ComplexNumber -Polar $a
+      PS> Write-ComplexNumber -Polar $a
       3.61 ∟ -0.983 
     .Example
-      PS> $m,$n | Show-ComplexNumber
+      PS> $m,$n | Write-ComplexNumber
       2-3i
       4+2i
         
-      Show-ComplexNumber can accept System.Numerics.Complex Objects from the pipeline. 
+      Write-ComplexNumber can accept System.Numerics.Complex Objects from the pipeline. 
     .Link
       New-ComplexNumber 
     .Link
@@ -372,7 +362,7 @@ function Show-ComplexNumber {
     #> 
     
     [CmdletBinding()]
-    [Alias('fcn')]
+    [Alias('wcn')]
     [OutputType('System.String')]
     
     param (
@@ -385,7 +375,7 @@ function Show-ComplexNumber {
         # Display in polar form.
         [Switch] $Polar,
 
-        # Show basic ASCII symbols.
+        # Write basic ASCII symbols.
         [Switch] $BasicSymbols
     )
     
@@ -397,7 +387,7 @@ function Show-ComplexNumber {
             else { 
                 0x2220  # an acute angle
             }
-        $Show = {
+        $Write = {
             if ($Polar) {
                 '{0:g3} {1} {2:g3}' -f $_.Magnitude, $Angle, $_.Phase;
             }
@@ -411,7 +401,7 @@ function Show-ComplexNumber {
     }
     
     process {
-        $InputObject.ForEach($Show) 
+        $InputObject.ForEach($Write) 
     }
 }
 

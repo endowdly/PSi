@@ -44,7 +44,8 @@ function ConvertTo-Degrees {
 }
 
 
-function ConvertTo-EngineeringNotation {    
+# Todo: Add validated SI and US Standard Unit List
+function ConvertTo-EngineeringString {    
     [CmdletBinding()]
 
     param (
@@ -60,7 +61,7 @@ function ConvertTo-EngineeringNotation {
 
     begin {
         $toEngNot = {
-            $object = [PSi.Converters.EngineeringNumeric]::new($_) 
+            $object = [Psi.EngineeringNumeric]::new($_) 
             $object.ToString() + $Unit
         }
     }
@@ -68,5 +69,35 @@ function ConvertTo-EngineeringNotation {
     process {
         $Value.ForEach($toEngNot)
     }
+}
+
+
+function ConvertFrom-CurrencyString {
+    [CmdletBinding()]
+
+    param(
+        # The string to convert
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName, ValueFromRemainingArguments)]
+        [string[]] $InputObject
+    )
+
+    begin {
+        $f = { 
+            $n = 0.0
+
+            if ([double]::TryParse(
+                $_,
+                [System.Globalization.NumberStyles]::Currency,
+                [cultureinfo]::CurrentCulture,
+                [ref] $n)) {
+                $n
+            }
+            else {
+                0.0
+            }
+        }
+    }
+
+    process { $InputObject.ForEach($f) } 
 }
 

@@ -9,16 +9,12 @@
 # }
 
 
-# Time to execute 10e3 iterations: 1.922 min.
+# Time to execute 10e3 iteration: 1.922 min.
 function Get-Gcd ($x, $y) {
-    while ($y -ne 0) {
-        $x, $y = $y, ($x % $y)
-    }
-    [Math]::Abs($x) 
+    [Psi.Mathematics]::Gcd($x, $y)
 }
 
 
 function Get-Lcm ($x, $y) {
-    [Math]::Abs($x * $y) / (Gcd $x $y)
+    [Psi.Mathematics]::Lcm($x, $y)
 }
-

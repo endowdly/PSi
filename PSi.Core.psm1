@@ -1350,7 +1350,7 @@ function Truncate {
 
 
 function pi { [Math]::PI }
-function tau { (pi) * 2 }
+function Get-Tau { (pi) * 2 }
 
 #endregion
 
@@ -1360,4 +1360,4 @@ function tau { (pi) * 2 }
     ForEach-Object Name |
     Export-ModuleMember
 
-Export-ModuleMember -Function Tau
+Export-ModuleMember -Function Get-Tau
